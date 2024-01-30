@@ -1,0 +1,39 @@
+/* WeatherMarker.css */
+.weather-marker .marker-icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border: 3px solid white;
+    border-radius: 50%; 
+    background-color: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 6px black; 
+  }
+  
+  .weather-marker .weather-icon {
+    width: 30px; 
+    height: 30px; 
+  }
+  
+
+  /* WeatherMarker.css */
+
+.weather-popup {
+    font-family: Arial, sans-serif; 
+    text-align: center; 
+  }
+  
+  .weather-popup h3 {
+    margin: 0.5em 0; 
+  }
+  
+  .weather-popup img {
+    width: 40px; 
+    height: 40px; 
+  }
+  
+  .weather-popup p {
+    margin: 0.5em 0; 
+  }
+  

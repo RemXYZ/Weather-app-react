@@ -1,0 +1,83 @@
+/* App.css */
+
+.app-style {
+  display: grid;
+  grid-template-columns: 3fr 1fr; 
+  grid-template-areas: "map charts"; 
+  height: 100vh;
+}
+
+.map-container {
+  grid-area: map; 
+  height: calc(100vh - 50px); 
+  padding: 30px;
+}
+
+.right-sidebar{
+  grid-area: charts; 
+  /* height: 100vh;  */
+}
+
+.charts-panel {
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Toggle Theme button styles */
+.toggle-theme-btn {
+  position: relative;
+  margin-top: 20px;
+  margin-bottom: 30px;
+  left: 50%; 
+  transform: translateX(-50%);
+  padding: 10px 20px;
+  font-size: 1em;
+  color: #fff;
+  background-color: #5c6bc0; 
+  border: none;
+  border-radius: 20px; 
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+  z-index: 100; 
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.toggle-theme-btn:hover {
+  background-color: #3949ab; 
+  box-shadow: 0 6px 8px rgba(0,0,0,0.3); 
+}
+
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+}
+
+/* Responsive adjustments */
+@media (max-width: 1040px) {
+  .app-style {
+    grid-template-columns: 1fr; 
+    grid-template-areas:
+      "map"
+      "charts";
+  }
+
+  .right-sidebar {
+    height: auto;
+    box-shadow: none;
+    padding: 50px;
+  }
+  .map-container {
+    height: 500px;
+  }
+
+  .toggle-theme-btn {
+    top: auto;
+    bottom: 20px; 
+    left: 50%;
+    transform: none; 
+  }
+}
+
+
