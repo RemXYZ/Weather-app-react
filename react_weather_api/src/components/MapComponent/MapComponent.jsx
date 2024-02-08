@@ -2,13 +2,16 @@ import React, { useEffect, useRef } from 'react';
 import { MapContainer, TileLayer, useMapEvents, useMap  } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import './MapComponent.css';
+import { LocateButtonStyle, MapBoxStyle, FilterPanelContainer, LoadingScreenContainer } from './MapComponentStyle';
+import styled from 'styled-components';
 
 import { useDispatch, useSelector } from 'react-redux';
 import WeatherMarker from '../WeatherMarker/WeatherMarker';
 import FilterPanel from '../FilterPanel/FilterPanel';
-import { setUserLocation } from '../../redux/actions/locationActions';
-import { setFilters } from '../../redux/actions/filterActions'; 
-import { setMapBounds } from '../../redux/actions/mapActions';
+import { setUserLocation } from '../../redux/slices/locationSlice';
+import { setFilters } from '../../redux/slices/filterSlice'; 
+import { setMapBounds } from '../../redux/slices/mapSlice';
+
 
 import LoadingScreen from '../LoadingScreen/LoadingScreen';
 import LoadingMarker from '../LoadingMarker/LoadingMarker';
@@ -102,7 +105,7 @@ const MapComponent = () => {
 
 
   const isLoading = useSelector(state => state.weather.loading_box); // Get loading state
-
+  // console.log(sortedWeatherData)
   const divStyle = {
     height: '30px' // Set the width to 100 pixels
   };
@@ -119,7 +122,7 @@ const MapComponent = () => {
         <MapEventsHandler weatherData={weatherData} />
         {sortedWeatherData
         .filter(city => city.population >= filters.minPopulation)
-        .filter(city => city.cityName.toLowerCase().includes(filters.name.toLowerCase()))
+        .filter(city => city.cityName && city.cityName.toLowerCase().includes(filters.name ? filters.name.toLowerCase() : ''))
         .map(city => {
           return city.loading
             ? <LoadingMarker key={city.id} position={[city.lat, city.lon]} />

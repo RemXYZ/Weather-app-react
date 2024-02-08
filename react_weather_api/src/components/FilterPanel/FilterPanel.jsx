@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'; 
-import { setFilters } from '../../redux/actions/filterActions'; 
+import { setFilters } from '../../redux/slices/filterSlice'; 
 
 const FilterPanel = () => {
   const dispatch = useDispatch();

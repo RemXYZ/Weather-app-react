@@ -2,7 +2,7 @@ import { ofType } from 'redux-observable';
 import { interval, of, from } from 'rxjs';
 import { switchMap, withLatestFrom, takeUntil, catchError, map } from 'rxjs/operators';
 import { fetchWeatherForCity } from '../../api/weatherApi';
-import { setWeatherData, setError } from '../actions/weatherActions';
+import { setWeatherData, setError } from '../slices/weatherSlice';
 
 const RELOAD_INTERVAL = 3600*1000; // 1 hour in milliseconds
 

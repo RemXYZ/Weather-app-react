@@ -3,13 +3,7 @@ import { from, of } from 'rxjs';
 import { switchMap, map, catchError, filter, withLatestFrom, startWith, endWith  } from 'rxjs/operators';
 import { fetchCitiesInBounds } from '../../api/overpassApi';
 import { fetchWeatherForCity } from '../../api/weatherApi';
-import { 
-  setWeatherData, 
-  fetchWeatherStart, 
-  fetchWeatherEnd, 
-  
-  setError 
-} from '../actions/weatherActions';
+import { fetchWeatherStart, fetchWeatherEnd, setWeatherData, setError } from '../slices/weatherSlice';
 
 // Helper function to merge new weather data with existing, preventing duplicates
 function mergeWeatherData(existingData, newData) {
@@ -22,11 +16,13 @@ export const fetchWeatherForNewCitiesEpic = (action$, state$) => action$.pipe(
   ofType('FETCH_WEATHER_FOR_NEW_CITIES'),
   withLatestFrom(state$),
   switchMap(([action, state]) => {
+    console.log(action)
     const { weatherData } = state.weather;
     const payload = action.payload || { 
       southWest: { lat: 0, lng: 0 }, 
       northEast: { lat: 0, lng: 0 } 
     };
+    console.log(payload)
     
     return from(fetchCitiesInBounds(payload)).pipe(
       switchMap(cities => {

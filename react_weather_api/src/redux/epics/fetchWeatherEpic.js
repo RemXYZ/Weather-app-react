@@ -1,7 +1,7 @@
 import { ofType } from 'redux-observable';
 import { from, of } from 'rxjs';
 import { switchMap, map, catchError } from 'rxjs/operators';
-import { FETCH_WEATHER, setWeather, setError as setWeatherError } from '../actions/weatherActions';
+import { FETCH_WEATHER, setWeather, setError as setWeatherError } from '../slices/weatherSlice';
 
 const WEATHER_API_URL = "https://api.weatherapi.com/v1/current.json";
 const WEATHER_API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
