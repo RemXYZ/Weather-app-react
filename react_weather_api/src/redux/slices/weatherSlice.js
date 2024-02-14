@@ -1,20 +1,9 @@
 // src/redux/slices/weatherSlice.js
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, createAction } from '@reduxjs/toolkit';
 
 // Assuming you have a function to fetch weather data
 import { fetchWeatherForCity } from '../../api/weatherApi';
 
-// export const fetchWeatherForNewCities = createAsyncThunk(
-//   'weather/fetchWeatherForNewCities',
-//   async ({ southWest, northEast }, { rejectWithValue }) => {
-//     try {
-//       const weatherData = await fetchWeatherForCity(southWest, northEast);
-//       return weatherData;
-//     } catch (error) {
-//       return rejectWithValue(error.message);
-//     }
-//   }
-// );
 
 
 
@@ -45,12 +34,19 @@ export const weatherSlice = createSlice({
       state.error = action.payload;
       state.loading = false;
     },
+    // Definiowanie akcji jako część slice'a
+
   },
+  
   
 });
 
+
+
+export const fetchWeatherForNewCities = createAction('FETCH_WEATHER_FOR_NEW_CITIES');
+
 // Actions
-export const { fetchWeatherStart, fetchWeatherEnd, setWeather, setWeatherData, setError, fetchWeatherForNewCities } = weatherSlice.actions;
+export const { fetchWeatherStart, fetchWeatherEnd, setWeather, setWeatherData, setError } = weatherSlice.actions;
 
 // Reducer
 export default weatherSlice.reducer;

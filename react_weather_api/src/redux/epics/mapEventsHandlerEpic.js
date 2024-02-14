@@ -2,8 +2,8 @@ import { ofType } from 'redux-observable';
 import { useDispatch, useSelector } from 'react-redux';
 import { debounceTime, switchMap, withLatestFrom, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { setError } from '../slices/weatherSlice';
-import { fetchWeatherForNewCities } from '../actions/weatherActions';
+import { setError, fetchWeatherForNewCities } from '../slices/weatherSlice';
+// import { fetchWeatherForNewCities } from '../actions/weatherActions';
 
 const MAP_MOVED = 'MAP_MOVED';
 

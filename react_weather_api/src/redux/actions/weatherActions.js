@@ -7,6 +7,8 @@ export const setWeatherData = data => ({
   type: SET_WEATHER_DATA,
   payload: data,
 });
+
+// export const makeMoveRequest = createAction(`${GAME_LOGIC_REDUCER_NAME}/makeMoveRequest`);
 export const fetchWeatherForNewCities = bounds => ({
   type: 'FETCH_WEATHER_FOR_NEW_CITIES',
   payload: bounds,
