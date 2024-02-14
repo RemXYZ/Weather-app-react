@@ -23,6 +23,7 @@ export const MapComponentStyle = styled(MapComponent)`
   grid-area: map; 
   height: calc(100vh - 50px); 
   padding: 30px;
+
 `;
 
 export const RightSidebarStyle = styled.div`
