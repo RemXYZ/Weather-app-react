@@ -11,9 +11,9 @@ function mergeWeatherData(existingData, newData) {
   existingData.forEach(item => newDataById.set(item.id, item)); // If item exists, it won't be overwritten
   return Array.from(newDataById.values());
 }
-
+const FETCH_WEATHER_FOR_NEW_CITIES = 'FETCH_WEATHER_FOR_NEW_CITIES';
 export const fetchWeatherForNewCitiesEpic = (action$, state$) => action$.pipe(
-  ofType('FETCH_WEATHER_FOR_NEW_CITIES'),
+  ofType(FETCH_WEATHER_FOR_NEW_CITIES),
   withLatestFrom(state$),
   switchMap(([action, state]) => {
     // console.log(action)

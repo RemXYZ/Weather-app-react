@@ -5,9 +5,9 @@ import { fetchWeatherForCity } from '../../api/weatherApi';
 import { setWeatherData, setError } from '../slices/weatherSlice';
 
 const RELOAD_INTERVAL = 3600*1000; // 1 hour in milliseconds
-
+const MAP_LOADED = "MAP_LOADED";
 export const reloadWeatherDataEpic = (action$, state$) => action$.pipe(
-  ofType('MAP_LOADED'),
+  ofType(MAP_LOADED),
   switchMap(() => interval(RELOAD_INTERVAL).pipe(
     withLatestFrom(state$),
     switchMap(([, state]) => {
