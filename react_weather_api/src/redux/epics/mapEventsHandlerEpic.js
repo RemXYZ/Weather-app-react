@@ -13,11 +13,7 @@ export const mapEventsHandlerEpic = (action$, state$) => action$.pipe(
     withLatestFrom(state$),
     switchMap(([action, state]) => {
         const { southWest, northEast } = action.payload;
-        console.log(southWest, northEast)
-        // useDispatch({
-        //     type: "FETCH_WEATHER_FOR_NEW_CITIES",
-        //     payload: action.payload
-        // });
+        // console.log(southWest, northEast)
         return of(fetchWeatherForNewCities({
             southWest,
             northEast

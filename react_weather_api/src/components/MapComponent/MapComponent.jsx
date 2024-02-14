@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import { TileLayer, useMapEvents, useMap,Marker  } from 'react-leaflet';
+import React, { useEffect } from 'react';
+import { TileLayer  } from 'react-leaflet';
 
 import { useDispatch, useSelector } from 'react-redux';
 import 'leaflet/dist/leaflet.css';
@@ -21,12 +21,6 @@ import { MapEventsHandler } from './MapEventHandler';
 
 
 
-
-
-
-
-
-
 const MapComponent = ({className}) => {
   const dispatch = useDispatch();
   const userLocation = useSelector(state => state.location.userLocation);
@@ -44,6 +38,12 @@ const MapComponent = ({className}) => {
   .sort((a, b) => b.population - a.population)
   .slice(0, 20);
   
+  useEffect(() => {
+    if (sortedWeatherData.some(city => city === undefined)) {
+      alert("Proszę wpisać API klucz");
+    }
+  }, [weatherData]); // Efekt będzie uruchomiony za każdym razem, gdy weatherData się zmieni
+
 
   useEffect(() => {
 
@@ -78,8 +78,6 @@ const MapComponent = ({className}) => {
     );
   }, [dispatch]); 
 
-
-
   const isLoading = useSelector(state => state.weather.loading_box); // Get loading state
   // console.log(sortedWeatherData)
   const divStyle = {
@@ -98,7 +96,9 @@ const MapComponent = ({className}) => {
         <MapEventsHandler weatherData={weatherData} />
         {sortedWeatherData
         .filter(city => city.population >= filters.minPopulation)
-        .filter(city => city.cityName && city.cityName.toLowerCase().includes(filters.name ? filters.name.toLowerCase() : ''))
+        .filter(city => {
+          return city.cityName && city.cityName.toLowerCase().includes(filters.name ? filters.name.toLowerCase() : '')
+        })
         .map(city => {
           return city.loading
             ? <LoadingMarker key={city.id} position={[city.lat, city.lon]} />

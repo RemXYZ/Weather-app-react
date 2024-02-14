@@ -25,7 +25,6 @@ const initialState = {
   loading: false,
   loading_box: false,
 };
-export const FETCH_WEATHER = 'FETCH_WEATHER';
 export const weatherSlice = createSlice({
   name: 'weather',
   initialState,

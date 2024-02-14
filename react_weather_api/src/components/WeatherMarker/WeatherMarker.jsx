@@ -1,13 +1,24 @@
 import React from 'react';
 import { Marker, Popup, Tooltip } from 'react-leaflet';
 import L from 'leaflet';
+import {
+  WeatherPopup,
+  PopupHeading,
+  PopupImage,
+  PopupParagraph
+} from './WeatherMarker.style';
 import './WeatherMarker.css';
+
 
 
 
 
 // Function to classify the weather
 const classifyWeather = (weather) => {
+  if (weather.condition === undefined) {
+    console.log("Nie moge wczytac dane z API, byc moze jest blad z API kluczem");
+    return 'not nice';
+  }
   const isRainFree = weather.condition.toLowerCase().indexOf('rain') === -1;
   const isNiceTemperature = weather.temperature >= 18 && weather.temperature <= 25;
 
@@ -55,13 +66,13 @@ const WeatherMarker = ({ weather, position }) => {
   return (
     <Marker position={position} icon={customIcon}>
       <Popup>
-        <div className="weather-popup">
-          <h3>{`${weather.cityName} - ${weatherClassification.toUpperCase()}`}</h3>
-          <p>{weather.condition} {weatherEmoji}</p>
-          <p>Temperature: {weather.temperature} °C</p>
-          <p>Condition: {weather.condition}</p>
-          <p>Pressure: {weather.pressure}</p>
-        </div>
+        <WeatherPopup>
+          <PopupHeading>{`${weather.cityName} - ${weatherClassification.toUpperCase()}`}</PopupHeading>
+          <PopupParagraph>{weather.condition} {weatherEmoji}</PopupParagraph>
+          <PopupParagraph>Temperature: {weather.temperature} °C</PopupParagraph>
+          <PopupParagraph>Condition: {weather.condition}</PopupParagraph>
+          <PopupParagraph>Pressure: {weather.pressure}</PopupParagraph>
+        </WeatherPopup>
       </Popup>
     </Marker>
   );

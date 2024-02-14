@@ -18,22 +18,8 @@
   
 
   /* WeatherMarker.css */
-
-.weather-popup {
-    font-family: Arial, sans-serif; 
-    text-align: center; 
-  }
-  
-  .weather-popup h3 {
-    margin: 0.5em 0; 
-  }
-  
   .weather-popup img {
     width: 40px; 
     height: 40px; 
-  }
-  
-  .weather-popup p {
-    margin: 0.5em 0; 
   }
   

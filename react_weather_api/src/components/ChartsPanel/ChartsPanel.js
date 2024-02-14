@@ -36,12 +36,15 @@ const ChartsPanel = () => {
         borderRadius: '5px',
         color: '#000',
       };
+      if (payload[0] === undefined || payload === undefined) {
+        console.log("Payload is undefined, maybe API key is wrong?");
+      }
       return (
         <div className="custom-tooltip" style={style}>
           <p className="label">{`${label}`}</p> {/* Label is the city name */}
-          <p className="intro">{`Temperature: ${payload[0].value}`}</p>
-          <p className="intro">{`Pressure: ${payload[1].value.toFixed(1)}`}</p>
-          <p className="intro">{`Niceness: ${payload[2].value}`}</p>
+          <p className="intro">{`Temperature: ${payload[0]?.value || 0}`}</p>
+          <p className="intro">{`Pressure: ${payload[1]?.value.toFixed(1) || 0}`}</p>
+          <p className="intro">{`Niceness: ${payload[2]?.value || 0}`}</p>
         </div>
       );
     }

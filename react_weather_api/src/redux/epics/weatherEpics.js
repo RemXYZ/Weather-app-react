@@ -16,13 +16,13 @@ export const fetchWeatherForNewCitiesEpic = (action$, state$) => action$.pipe(
   ofType('FETCH_WEATHER_FOR_NEW_CITIES'),
   withLatestFrom(state$),
   switchMap(([action, state]) => {
-    console.log(action)
+    // console.log(action)
     const { weatherData } = state.weather;
     const payload = action.payload || { 
       southWest: { lat: 0, lng: 0 }, 
       northEast: { lat: 0, lng: 0 } 
     };
-    console.log(payload)
+    // console.log(payload)
     
     return from(fetchCitiesInBounds(payload)).pipe(
       switchMap(cities => {
