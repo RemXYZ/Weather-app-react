@@ -7,11 +7,11 @@ export const LocateButton = ({className}) => {
     const handleLocate = () => {
       map.locate().on("locationfound", (e) => {
         map.flyTo(e.latlng, map.getZoom());
+      })
+      .on("locationerror", (e) => {
+        console.error("No location data");
+        // alert("Could not find your location");
       });
-      // .on("locationerror", (e) => {
-      //   console.log(e);
-      //   alert("Could not find your location");
-      // });
     };
   
     return <button className={className} onClick={handleLocate}>Locate Me</button>;
