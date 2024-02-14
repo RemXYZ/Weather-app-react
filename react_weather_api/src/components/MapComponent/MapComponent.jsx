@@ -18,35 +18,31 @@ import LoadingMarker from '../LoadingMarker/LoadingMarker';
 import LocationMarker from '../LocationMarker/LocationMarker';
 
 import { MapEventsHandler } from './MapEventHandler';
+import { sortedWeatherDataSelector } from '../../redux/selectors/sortedWeatherDataSelector';
 
 
+const MAP_MOVED = 'MAP_MOVED';
 
 const MapComponent = ({className}) => {
+
   const dispatch = useDispatch();
   const userLocation = useSelector(state => state.location.userLocation);
-  const weatherData = useSelector(state => state.weather.weatherData);
+  // const weatherData = useSelector(state => state.weather.weatherData);
+  // const mapBounds = useSelector(state => state.mapBounds);
   const filters = useSelector(state => state.filters);
-  const mapBounds = useSelector(state => state.mapBounds);
   
   // console.log(mapBounds)
-  const sortedWeatherData = weatherData
-  .filter(city => {
-    // Check if city is within current map bounds
-    return city.lat >= mapBounds.southWest.lat && city.lat <= mapBounds.northEast.lat
-        && city.lon >= mapBounds.southWest.lng && city.lon <= mapBounds.northEast.lng;
-  })
-  .sort((a, b) => b.population - a.population)
-  .slice(0, 20);
-  
+  const sortedWeatherData = useSelector(sortedWeatherDataSelector);
+
   useEffect(() => {
     if (sortedWeatherData.some(city => city === undefined)) {
       alert("Proszę wpisać API klucz");
     }
-  }, [weatherData]); // Efekt będzie uruchomiony za każdym razem, gdy weatherData się zmieni
+  }, [sortedWeatherData]); // Efekt będzie uruchomiony za każdym razem, gdy weatherData się zmieni
 
 
   useEffect(() => {
-
+    // console.log("Hi")
     navigator.geolocation.getCurrentPosition(
       position => {
         const { latitude, longitude } = position.coords;
@@ -58,7 +54,7 @@ const MapComponent = ({className}) => {
         };
         // dispatch({ type: 'FETCH_WEATHER_FOR_NEW_CITIES', payload });
         dispatch({
-          type: "MAP_MOVED",
+          type: MAP_MOVED,
           payload: payload
         });
         dispatch(setMapBounds(payload))
@@ -69,14 +65,14 @@ const MapComponent = ({className}) => {
           northEast: { lat: userLocation[0] + 0.05, lng: userLocation[1] + 0.05 },
         };
         dispatch({
-          type: "MAP_MOVED",
+          type: MAP_MOVED,
           payload: payload1
         });
         dispatch(setMapBounds(payload1))
         console.error("Unable to retrieve your location");
       }
     );
-  }, [dispatch]); 
+  }, []); 
 
   const isLoading = useSelector(state => state.weather.loading_box); // Get loading state
   // console.log(sortedWeatherData)
@@ -93,7 +89,7 @@ const MapComponent = ({className}) => {
       <MapContainerStyle center={userLocation} key={userLocation.toString()} zoom={13} className='map-box'>
         <LocateButtonStyle/>
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-        <MapEventsHandler weatherData={weatherData} />
+        <MapEventsHandler />
         {sortedWeatherData
         .filter(city => city.population >= filters.minPopulation)
         .filter(city => {
