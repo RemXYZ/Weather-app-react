@@ -1,13 +1,13 @@
 import React, { useEffect, useRef } from 'react';
-import { MapContainer, TileLayer, useMapEvents, useMap  } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
-import './MapComponent.css';
-import { LocateButtonStyle, MapBoxStyle, FilterPanelContainer, LoadingScreenContainer } from './MapComponentStyle';
-import styled from 'styled-components';
+import { TileLayer, useMapEvents, useMap,Marker  } from 'react-leaflet';
 
 import { useDispatch, useSelector } from 'react-redux';
+import 'leaflet/dist/leaflet.css';
+import { LocateButtonStyle, MapContainerStyle, FilterPanelContainerStyle, LoadingScreenContainer } from './MapComponent.style';
+import styled from 'styled-components';
+
 import WeatherMarker from '../WeatherMarker/WeatherMarker';
-import FilterPanel from '../FilterPanel/FilterPanel';
+
 import { setUserLocation } from '../../redux/slices/locationSlice';
 import { setFilters } from '../../redux/slices/filterSlice'; 
 import { setMapBounds } from '../../redux/slices/mapSlice';
@@ -15,43 +15,19 @@ import { setMapBounds } from '../../redux/slices/mapSlice';
 
 import LoadingScreen from '../LoadingScreen/LoadingScreen';
 import LoadingMarker from '../LoadingMarker/LoadingMarker';
+import LocationMarker from '../LocationMarker/LocationMarker';
+
+import { MapEventsHandler } from './MapEventHandler';
 
 
-const LocateButton = () => {
-  const map = useMap(); // Hook to access the map instance
 
-  const handleLocate = () => {
-    map.locate().on("locationfound", (e) => {
-      map.flyTo(e.latlng, map.getZoom());
-    });
-  };
 
-  return <button className="locate-button" onClick={handleLocate}>Locate Me</button>;
-};
 
-const MapEventsHandler = () => {
-  const dispatch = useDispatch();
-  const map = useMapEvents({
-    moveend: () => {
-      const bounds = map.getBounds();
-      const payload =  {
-        southWest: { lat: bounds.getSouthWest().lat, lng: bounds.getSouthWest().lng },
-        northEast: { lat: bounds.getNorthEast().lat, lng: bounds.getNorthEast().lng },
-      }
-      // console.log(payload)
-      dispatch({
-        type: "MAP_MOVED",
-        payload: payload
-      });
-      // console.log(payload)
-      dispatch(setMapBounds(payload))
-    },
-  });
 
-  return null;
-};
 
-const MapComponent = () => {
+
+
+const MapComponent = ({className}) => {
   const dispatch = useDispatch();
   const userLocation = useSelector(state => state.location.userLocation);
   const weatherData = useSelector(state => state.weather.weatherData);
@@ -110,14 +86,14 @@ const MapComponent = () => {
     height: '30px' // Set the width to 100 pixels
   };
   return (
-    <div className="map-container">
-      <FilterPanel onFilterChange={newValue => dispatch(setFilters(newValue))} className="filter-panel"/>
+    <div className={className}>
+      <FilterPanelContainerStyle onFilterChange={newValue => dispatch(setFilters(newValue))} className="filter-panel"/>
       <div style={divStyle}>
         {isLoading && <LoadingScreen className="loading-screen"/>} {/* Render loading screen if loading state is true */}
       </div>
       
-      <MapContainer center={userLocation} key={userLocation.toString()} zoom={13} className='map-box'>
-        <LocateButton/>
+      <MapContainerStyle center={userLocation} key={userLocation.toString()} zoom={13} className='map-box'>
+        <LocateButtonStyle/>
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         <MapEventsHandler weatherData={weatherData} />
         {sortedWeatherData
@@ -128,7 +104,8 @@ const MapComponent = () => {
             ? <LoadingMarker key={city.id} position={[city.lat, city.lon]} />
             : <WeatherMarker key={city.id} position={[city.lat, city.lon]} weather={city} />;
         })}
-      </MapContainer>
+        <LocationMarker userLocation={userLocation}></LocationMarker>
+      </MapContainerStyle>
     </div>
   );
 };

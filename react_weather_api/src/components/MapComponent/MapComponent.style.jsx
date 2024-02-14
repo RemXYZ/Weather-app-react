@@ -1,7 +1,9 @@
 import styled from 'styled-components';
-
+import { LocateButton } from '../LocateButton/LocateButton';
+import { MapContainer } from 'react-leaflet';
+import FilterPanel from '../FilterPanel/FilterPanel';
 // Your styled components here
-export const MapBoxStyle = styled.div`
+export const MapContainerStyle = styled(MapContainer)`
 position: relative;
 height: 80%; 
 border-radius: 20px;
@@ -9,7 +11,7 @@ margin: 30px;
 `;
 
 
-export const LocateButtonStyle = styled.button`
+export const LocateButtonStyle = styled(LocateButton)`
   position: absolute;
   top: 10px; 
   right: 10px;
@@ -38,7 +40,7 @@ export const LocateButtonStyle = styled.button`
 
 
 
-export const FilterPanelContainer = styled.div`
+export const FilterPanelContainerStyle = styled(FilterPanel)`
   position: relative;
   top: 0;
   left: 0;
@@ -46,8 +48,4 @@ export const FilterPanelContainer = styled.div`
   z-index: 10;
   padding: 10px;
   box-sizing: border-box;
-`;
-
-export const LoadingScreenContainer = styled.div`
-  height: 30px;
 `;
